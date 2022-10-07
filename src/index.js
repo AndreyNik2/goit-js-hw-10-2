@@ -9,9 +9,8 @@ const DEBOUNCE_DELAY = 300;
 const restcountries = new restcountriesAPI();
 
 const handleInput = event => {
-    refs.countryInfo.insertAdjacentElement = '';
-    refs.countryList.insertAdjacentElement = '';
-
+    refs.countryInfo.innerHTML = '';
+    refs.countryList.innerHTML = '';
     const query = event.target.value;
     const countryName = query.trim().toLowerCase();
     if (!countryName) {
@@ -19,17 +18,17 @@ const handleInput = event => {
     return;
     }
     if (countryName.length === 1) {
-       Notify.info("Too many matches found. Please enter a more specific name."); 
+        Notify.info("Too many matches found. Please enter a more specific name."); 
     }
     restcountries.getCountries(countryName).then(resalts => {
         const markup = createMarkup(resalts);
         if (resalts.length === 1) {
-            // refs.countryInfo.insertAdjacentElement('beforeend', markup)
+            refs.countryInfo.insertAdjacentHTML('beforeend', markup)
             console.log(markup);
             console.log(refs.countryInfo);
         }
         if (resalts.length > 1) {
-            // refs.countryList.insertAdjacentElement('beforeend', markup)
+            refs.countryList.insertAdjacentHTML('beforeend', markup)
             console.log(markup);
             console.log(refs.countryList);
         }
