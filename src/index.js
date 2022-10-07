@@ -15,10 +15,11 @@ const handleInput = event => {
     const countryName = query.trim().toLowerCase();
     if (!countryName) {
         Notify.failure('Please enter country name to search.');
-    return;
+        return;
     }
     if (countryName.length === 1) {
         Notify.info("Too many matches found. Please enter a more specific name."); 
+        return
     }
     restcountries.getCountries(countryName).then(resalts => {
         const markup = createMarkup(resalts);
@@ -44,9 +45,7 @@ function createMarkup(countries) {
         
         return countries.map(({name, flags}) => {
             return `<li class="country-item">
-                    <svg class="country-flag" width="20" height="20">
-                        <use href=${flags.svg}></use>
-                    </svg>
+                    <img class="country-flag" width="60px" src=${flags.svg}>
                     <h1 class="country-name">${name}</h1>
                     </li>`
         }).join('')
@@ -54,9 +53,7 @@ function createMarkup(countries) {
     if (countries.length === 1) {
 
         return countries.map(({name, capital, population, flags, languages}) => {
-            return `<svg class="country-flag" width="20" height="20">
-                        <use href=${flags.svg}></use>
-                    </svg>
+            return `<img class="country-flag" width="60px" src=${flags.svg}>
                     <h1 class="country-name">${name}</h1>
                     <p class="countre-capital">Capital: ${capital}</p>
                     <p class="country-population">Population: ${population}</p>
