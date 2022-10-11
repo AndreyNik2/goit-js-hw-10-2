@@ -1,5 +1,5 @@
 import './css/styles.css';
-import { refs } from './js/Refs';
+import { refs } from './js/refs';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { restcountriesAPI } from './js/restcountries';
