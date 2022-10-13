@@ -14,21 +14,18 @@ const handleInput = event => {
     refs.countryList.innerHTML = '';
     const query = event.target.value;
     const countryName = query.trim().toLowerCase();
-    if (!countryName) {
-        Notify.failure('Please enter country name to search.');
-        return;
-    }
-    if (countryName.length === 1) {
+
+    restcountries.getCountries(countryName)
+        .then(resalts => {
+            const markup = createMarkup(resalts);
+        if (resalts.length > 10) {
         Notify.info("Too many matches found. Please enter a more specific name."); 
-        return
-    }
-    restcountries.getCountries(countryName).then(resalts => {
-        const markup = createMarkup(resalts);
+        }
+        if (resalts.length > 1 && resalts.length <= 10) {
+            refs.countryList.insertAdjacentHTML('beforeend', markup)
+        }
         if (resalts.length === 1) {
             refs.countryInfo.insertAdjacentHTML('beforeend', markup)
-        }
-        if (resalts.length > 1) {
-            refs.countryList.insertAdjacentHTML('beforeend', markup)
         }
     });
 }
