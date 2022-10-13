@@ -14,6 +14,9 @@ const handleInput = event => {
     refs.countryList.innerHTML = '';
     const query = event.target.value;
     const countryName = query.trim().toLowerCase();
+    if (event.target.value.length === 0) {
+        return
+    }
 
     restcountries.getCountries(countryName)
         .then(resalts => {
